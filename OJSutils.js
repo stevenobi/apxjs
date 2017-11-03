@@ -11,6 +11,8 @@
  *
  **/
 
+/*jshint esversion: 6*/
+
 /**
  * @namespace OJSutils (O's Javascript Utilities 2017/11/01)
  * 
