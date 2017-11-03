@@ -319,7 +319,7 @@ OJStype.Array = function(a) {
             return (o);
         }
     };
-    this.array.replaceBy = function(array, userOptions) {
+    this.array.replaceBy = function(array, userOptions = {}) {
             var o, i;
             console.log('options.toString().split: ' + array.toString().split(',') + ' ' + array.length);
             var returnObject = Array();
