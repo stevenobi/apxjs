@@ -8,6 +8,7 @@
  *
  * @version 0.1.0 24.10.2017 SOB: created
  * @version 1.0.0 31.10.2017 SOB: added Types and moved Array functions
+ * @version 1.0.1 05.11.2017 SOB: added Options and merge Array functions
  *
  **/
 
