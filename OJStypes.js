@@ -10,7 +10,12 @@
  * @version 1.0.0 31.10.2017 SOB: added Types and moved Array functions
  * @version 1.0.1 05.11.2017 SOB: added Options and merge Array function
  *
+ * 
+ * 
+ * 
  **/
+
+/*jshint esversion: 6*/
 
 /**
  * @namespace OJStype (O's Javascript "Types" and Extensions 2017/11/01)
@@ -31,6 +36,19 @@ OJStype.Option = function(o) {
         //console.log('making options object from json string');
         this.options = new OJStype.Object(o);
     } else {
+<<<<<<< HEAD
+        //console.log('making options object from: ' + typeof o);
+        this.options = new Object(o);
+    }
+    //console.log('made this.options object: ' + this.options.constructor);
+    // methods
+    this.options.mergeOptions = function(options, returnAsObjectType = false, unique = false) {
+        var i, opt, opts, returnObject;
+        if (options && options[0].constructor == Object &&
+            !(options[0] instanceof Array)) {
+            opts = new OJStype.Object();
+            returnObject = new Object({});
+=======
         if (o) {
             this.options = new String(o);
         } else {
@@ -46,12 +64,13 @@ OJStype.Option = function(o) {
             !(options[0] instanceof Array)) {
             opts = new OJStype.Object([]);
             returnObject = new Object();
+>>>>>>> origin/master
             // Options is an array of objects that get processed in order
-            for (var i = 0; i < options.length; ++i) {
+            for (i = 0; i < options.length; ++i) {
                 if (opts.isObject(options[i])) {
                     opt = options[i];
                 } else {
-                    (opts.toObject(options[i]) || {})
+                    (opts.toObject(options[i]));
                 }
                 opts = opts.mergeWith(opt);
             }
@@ -64,6 +83,46 @@ OJStype.Option = function(o) {
                 }
             }
         } else if (options && (options instanceof Array || options[0] instanceof Array)) {
+<<<<<<< HEAD
+            // Options are array[s] of arrays that get processed in order
+            // Works best with 2 arrays. More are supported, but not stable yet //TODO
+
+            //console.log('options.toString().split: ' + options.toString().split(',') + ' ' + options.length);
+            opts = options.toString().split(',');
+            returnObject = new Array([]);
+            var j, str = new OJStype.String();
+            if (options.length == 1) {
+                //console.log('this.length: ' + this.length + " opts.length: " + opts.length);
+                for (i = 0; i < opts.length; ++i) {
+                    //console.log(i + ' ' + ' this.options[' + i + ']: ' + this[i] + ' - opts [' + i + ']: ' + opts[i]);
+                    if (Number(opts[i])) {
+                        o = Number(opts[i]);
+                    } else if ((opts[i] == "true" || opts[i] == "false")) {
+                        o = str.toBoolean(opts[i]);
+                    } else {
+                        o = opts[i];
+                    }
+                    this[i] = o;
+                }
+                for (i = 0; i < this.length; ++i) {
+                    returnObject.push(this[i]);
+                }
+                return (returnAsObjectType ? this : returnObject);
+            } else {
+                opts = new OJStype.Option([]);
+                for (j = 0; j < options.length; ++j) {
+                    for (i = 0; i < options[j].length; ++i) {
+                        opts1 = options[j][i];
+                        opts2 = options[j][i + 1];
+                        opts3 = new OJStype.Array(opts1);
+                        if (opts2) {
+                            opts3.replaceBy(opts2, { "write": "true", "append": "true" });
+                            if (unique) {
+                                opts = opts.unique(opts3);
+                            } else {
+                                opts[j] = (opts3);
+                            }
+=======
             // Option Arrays are array[s] of arrays that get merged in order
             var returnObject = Array(),
                 optionsMerger = function(a, returnAsObjType, myOptions) {
@@ -74,6 +133,7 @@ OJStype.Option = function(o) {
                             //console.log(o = o.replaceBy(a[i + 1], myOptions));
                             o = o.replaceBy(a[i + 1], myOptions)
                             a[i + 1] = o;
+>>>>>>> origin/master
                         }
                     }
                     for (i = 0; i < o.length; ++i) {
@@ -94,7 +154,7 @@ OJStype.Option = function(o) {
 
 OJStype.Object = function(o) {
     // constructor
-    this.object = new Object();
+    this.object = new Object([]);
     if (o && o.constructor === Object) {
         this.object = new Object(o);
     } else if (o && o.constructor === String) {
@@ -102,9 +162,10 @@ OJStype.Object = function(o) {
             this.object = JSON.parse(o);
         } catch (err) {
             console.warn(' Invalid JSON string: "' + o + '" returning input.');
-            return this.object = String(o);
+            this.object = String(o);
+            return this.Object;
         }
-    };
+    }
     // methods
     this.object.isObject = function(obj) {
         if (obj && obj.constructor === Object) {
@@ -143,10 +204,10 @@ OJStype.Object = function(o) {
 
 OJStype.String = function(s) {
     // constructor
-    this.string = new String();
+    this.string = String();
     if (s && s.constructor === String) {
-        this.string = new String(s);
-    };
+        this.string = String(s);
+    }
     // methods
     this.string.isString = function(s) {
         if (s && s.constructor === String) {
@@ -169,10 +230,10 @@ OJStype.String = function(s) {
 
 OJStype.Number = function(i) {
     // constructor
-    this.number = new Number();
+    this.number = Number();
     if (i && i.constructor === Number) {
-        this.number = new Number(i);
-    };
+        this.number = Number(i);
+    }
     this.number.isNumber = function(i) {
         if (typeof(i) !== 'boolean') {
             j = (i ? i : this);
@@ -214,15 +275,15 @@ OJStype.Number = function(i) {
 
 OJStype.Array = function(a) {
     // constructor
-    this.array = new Array();
+    this.array = new Array([]);
     // see if some array been passed in and apply if so
     if (a && a.constructor === Array) {
         for (var i = 0; i < a.length; ++i) {
             this.array.push(a[i]);
         }
-    };
+    }
     // Array Options
-    this.array.Options = { "write": "false" } // modify this.array when supported?
+    this.array.Options = { "write": "false" }; // modify this.array when supported?
 
     this.array.unique = function(array) {
         this.concat(array);
@@ -239,8 +300,13 @@ OJStype.Array = function(a) {
         if (array && (array.constructor == Array || (array instanceof Array))) {
             return true;
         } else {
+<<<<<<< HEAD
+            console.log('arrayIn is: ' + array.constructor);
+            return false;
+=======
             return false;
             //console.log('arrayIn is: ' + array.constructor);
+>>>>>>> origin/master
         }
     };
     this.array.odd = function(w = false) {
@@ -249,12 +315,12 @@ OJStype.Array = function(a) {
         for (var i = 0; i < this.length; ++i) {
             if (n.isOdd(this[i])) {
                 //build a new array with only odd elements
-                (w ? null : a.push(this[i]));
+                if (w) a.push(this[i]);
             } else {
                 //w(rite) this.array? if then remove even element
-                (w ? this.splice(i--, 1) : null);
-            };
-        };
+                if (w) this.splice(i--, 1);
+            }
+        }
         return (w ? this : a);
     };
     this.array.even = function(w = false) {
@@ -263,21 +329,25 @@ OJStype.Array = function(a) {
         for (var i = 0; i < this.length; ++i) {
             if (n.isEven(this[i])) {
                 //build a new array with only even elements
-                (w ? null : a.push(this[i]));
+                if (w) a.push(this[i]);
             } else {
                 //w(rite) this.array? if then remove odd element
-                (w ? this.splice(i--, 1) : null);
-            };
-        };
+                if (w) this.splice(i--, 1);
+            }
+        }
         return (w ? this : a);
     };
     this.array.toArray = function(array, options) {
         //console.log('options.toString().split: ' + array.toString().split(',') + ' ' + array.length);
         return (Array(array.toString().split(',')) ? Array(array.toString().split(',')) : array.toString());
-    }
+    };
     this.array.convertTo = function(value, options = { "returnType": "native" }) {
         var o, v = value;
+<<<<<<< HEAD
+        //console.log('converting value: ' + v);
+=======
         console.log('converting value: ' + v);
+>>>>>>> origin/master
         if (v && options.returnType == "native") {
             if (Number(v)) {
                 o = Number(v);
@@ -290,6 +360,67 @@ OJStype.Array = function(a) {
             return (o);
         }
     };
+<<<<<<< HEAD
+    this.array.replaceBy = function(array, userOptions = {}) {
+            var o, i;
+            console.log('options.toString().split: ' + array.toString().split(',') + ' ' + array.length);
+            var returnObject = Array();
+            var str = new OJStype.String();
+            var opt = new OJStype.Option();
+            var defaultOptions = { "write": "true", "truncate": "false", "append": "false" };
+            var arrayOptions = opt.mergeOptions([this.Options, defaultOptions, userOptions]);
+            // parsing final options
+            write = str.toBoolean(arrayOptions.write);
+            append = str.toBoolean(arrayOptions.append);
+            truncate = str.toBoolean(arrayOptions.truncate);
+            returnAsObjectType = write;
+            console.log('Final Array.replaceBy Options: "write" = ' + write + ' | "append" = ' + append + ' | "trunc" = ' + truncate);
+            // returning Final Options to this.Options
+            this.Options = arrayOptions;
+            // start replacing array
+            a = array.toString().split(',');
+            //console.log('this.length: ' + this.length + " arrayIn.length: " + a.length);
+            for (i = 0; i < this.length; ++i) {
+                console.log(i + ' ' + ' this.array[' + i + ']: ' + this[i] + ' - arrayIn [' + i + ']: ' + a[i]);
+                if (a[i] && typeof a[i] !== "undefined" && a[i] !== null) {
+                    if (typeof a[i] === 'boolean') {
+                        o = Boolean(a[i]);
+                    }
+                } else {
+                    o = this.convertTo(a[i]);
+                }
+                if (write) {
+                    this[i] = o;
+                } else {
+                    returnObject.push(o);
+                }
+            }
+            if (append) {
+                if (a.length > this.length) {
+                    //console.log('Array: appending ' + (a.length - this.length) + ' element/s');
+                    for (i = a.length + (this.length - a.length); i < a.length; ++i) {
+                        if (typeof a[i] === 'boolean') {
+                            Boolean(o = a[i]);
+                        } else {
+                            o = this.convertTo(a[i]);
+                        }
+                        if (write) {
+                            this[i] = o;
+                        } else {
+                            returnObject.push(o);
+                        }
+                    }
+                }
+            }
+            if (truncate) {
+                if (a.length < this.length) {
+                    //console.log('Array: truncating ' + (this.length - a.length) + ' element/s ' + returnObject.length);
+                    for (i = this.length + (a.length - this.length); i < this.length; ++i) {
+                        if (write) {
+                            this.splice(i--, 1);
+                        }
+                    }
+=======
     this.array.replaceBy = function(array, userOptions) {
         var o;
         //console.log('options.toString().split: ' + array.toString().split(',') + ' ' + array.length);
@@ -327,6 +458,7 @@ OJStype.Array = function(a) {
             } else {
                 if (truncate && write) {
                     this.splice(i--, 1);
+>>>>>>> origin/master
                 }
             }
         }
