@@ -15,8 +15,6 @@
  * 
  **/
 
-/*jshint esversion: 6*/
-
 /**
  * @namespace OJStype (O's Javascript "Types" and Extensions 2017/11/01)
  **/
