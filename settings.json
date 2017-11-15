@@ -1,0 +1,35 @@
+{
+    "workbench.startupEditor": "newUntitledFile",
+    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.formatOnPaste": true,
+    "team.showWelcomeMessage": false,
+    "git.enableSmartCommit": true,
+    "workbench.iconTheme": "vscode-icons",
+    "terminal.integrated.shell.windows": "C:\\Windows\\System32\\cmd.exe",
+    "extensions.ignoreRecommendations": false,
+    "vsicons.dontShowNewVersionMessage": true,
+    "files.trimTrailingWhitespace": true,
+    "editor.minimap.enabled": false,
+ //   "jshint.config": "G:\\OBESTE\\PRJ\\.jshintrc",
+ //   "prettier.eslintIntegration": true,
+    "css.lint.unknownProperties": "warning",
+    "workbench.colorTheme": "One Dark Pro",
+    "workbench.colorCustomizations": {
+        "tab.activeBackground": "#282c34",
+        "activityBar.background": "#282c34",
+        "editorGroup.background": "#282c34",
+        "sideBar.background": "#252830"
+    },
+    "files.associations": {
+        "*.sql": "sql",
+        "*.ddl": "oracle",
+        "*.dml": "oracle",
+        "*.pkg": "oracle",
+        "*.pks": "oracle",
+        "*.pkb": "oracle",
+        "*.prc": "oracle",
+        "*.fnc": "oracle",
+        "*.trg": "oracle",
+        "*.mv":  "oracle"
+    }
+}
