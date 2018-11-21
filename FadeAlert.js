@@ -4,10 +4,11 @@ function fadeAlert(s, d = 2000, f = 'slow') {
   }
 
 //IE safe
-function fadeAlert(s, d, f) {
-    var Delay = d || 2000,
-        Fade  = f || 'slow';
-  $('.t-Alert').delay(Delay).fadeOut(Fade);
+function fadeAlert(d, f, s) {
+    var Delay    = d || 2000,
+        Fade     = f || 'slow',
+        Selector = s || '.t-Alert';
+  $(Selector).delay(Delay).fadeOut(Fade);
 }
 
 
